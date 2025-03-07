@@ -5,12 +5,12 @@ import {
   getUserProgress,
   getUserResults,
   getUserAudits,
-} from "./graphqlService";
-import XpChart from "./components/XpChart";
-import ProjectsChart from "./components/ProjectsChart";
-import UserInfo from "./components/UserInfo";
-import SkillsRadar from "./components/SkillsRadar";
-import AuditRatio from "./components/AuditRatio";
+} from "../graphqlService";
+import XpChart from "./XpChart";
+import ProjectsChart from "./ProjectsChart";
+import UserInfo from "./UserInfo";
+import SkillsRadar from "./SkillsRadar";
+import AuditRatio from "./AuditRatio";
 import "./Profile.css";
 
 const Profile = ({ token, onLogout }) => {

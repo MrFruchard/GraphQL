@@ -4,9 +4,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/GraphQL/",
+  root: ".", // Définit explicitement la racine du projet
   build: {
-    rollupOptions: {
-      input: "index.html", // Chemin relatif, plus simple
-    },
+    outDir: "dist",
+    emptyOutDir: true,
   },
 });
