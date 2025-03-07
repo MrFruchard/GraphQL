@@ -1,0 +1,134 @@
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #242424;
+  min-height: 100vh;
+  color: white;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.profile-header h1 {
+  color: #f64cf1;
+  margin: 0;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 1px solid #f64cf1;
+  color: #f64cf1;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #f64cf1;
+  color: white;
+}
+
+.profile-nav {
+  margin-bottom: 2rem;
+}
+
+.profile-nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.profile-nav li {
+  margin-right: 1rem;
+}
+
+.profile-nav button {
+  background: none;
+  border: none;
+  color: #cccccc;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.profile-nav li.active button,
+.profile-nav button:hover {
+  color: #f64cf1;
+  border-bottom: 2px solid #f64cf1;
+}
+
+.profile-content {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.loading,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .charts-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.chart-section {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-section h2 {
+  color: #f64cf1;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.skills-container,
+.audits-container {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skills-container h2,
+.audits-container h2 {
+  color: #f64cf1;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}

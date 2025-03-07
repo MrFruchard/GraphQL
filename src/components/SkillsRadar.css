@@ -1,0 +1,128 @@
+.skills-radar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.skills-radar {
+  max-width: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.skills-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.skill-legend-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #333;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.skill-legend-item.active {
+  background-color: #444;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.skill-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.skill-name {
+  font-weight: bold;
+  color: #eee;
+  margin-right: 8px;
+}
+
+.skill-score {
+  color: #f64cf1;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.skill-ratio {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  color: #aaa;
+  font-size: 16px;
+}
+
+/* SVG Elements interactive styles */
+circle,
+line,
+text,
+path {
+  transition: all 0.3s ease;
+}
+
+text:hover,
+circle:hover {
+  cursor: pointer;
+}
+
+/* Animation pour le radar */
+@keyframes radar-pulse {
+  0% {
+    stroke-width: 2;
+    opacity: 0.8;
+  }
+  50% {
+    stroke-width: 3;
+    opacity: 1;
+  }
+  100% {
+    stroke-width: 2;
+    opacity: 0.8;
+  }
+}
+
+path {
+  animation: radar-pulse 3s infinite;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .skills-radar {
+    max-width: 400px;
+    max-height: 400px;
+  }
+
+  .skill-legend-item {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .skills-radar {
+    max-width: 300px;
+    max-height: 300px;
+  }
+}
