@@ -1,17 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zone01 GraphQL Profile</title>
-    <meta
-      name="description"
-      content="Zone01 student profile page using GraphQL"
-    />
+    <title>Profil Zone01</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./xp/xpStyle.css" />
+    <!-- Autres CSS à ajouter plus tard -->
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- Section de connexion -->
+    <div id="login-section" class="container">
+      <h2>Connexion Zone01</h2>
+      <form id="loginForm">
+        <input
+          type="text"
+          id="username"
+          placeholder="Nom d'utilisateur ou email"
+        />
+        <input type="password" id="password" placeholder="Mot de passe" />
+        <button type="submit">Se connecter</button>
+      </form>
+      <div id="login-result" class="result">
+        Entrez vos identifiants pour vous connecter.
+      </div>
+    </div>
+
+    <!-- Section du profil (cachée par défaut) -->
+    <div id="profile-section" class="container" style="display: none">
+      <div class="profile-header">
+        <h1 id="profile-name">Profil Zone01</h1>
+        <button id="logoutButton">Se déconnecter</button>
+      </div>
+
+      <!-- Section XP -->
+      <div class="section" id="xp-section">
+        <h2>Expérience (XP)</h2>
+        <div id="xp-total">Chargement...</div>
+        <div id="xp-history"></div>
+      </div>
+
+      <!-- Futures sections à ajouter -->
+      <div class="section" id="grades-section">
+        <h2>Notes</h2>
+        <div id="grades-content">Sera implémenté prochainement...</div>
+      </div>
+
+      <div class="section" id="skills-section">
+        <h2>Compétences</h2>
+        <div id="skills-content">Sera implémenté prochainement...</div>
+      </div>
+
+      <!-- Section Graphiques -->
+      <div class="section" id="graphs-section">
+        <h2>Statistiques</h2>
+        <div id="graph-container">
+          <!-- Les graphiques SVG seront insérés ici -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="log.js"></script>
+    <script src="graphql.js"></script>
+    <script src="/xp/xpServices.js"></script>
+    <script src="/xp/xpDisplay.js"></script>
+    <!-- Autres scripts à ajouter plus tard -->
   </body>
 </html>

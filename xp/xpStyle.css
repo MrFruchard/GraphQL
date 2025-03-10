@@ -1,0 +1,58 @@
+/* Styles pour la section XP */
+
+/* Compteur d'XP */
+.xp-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #e9f0ff;
+  border-radius: 8px;
+}
+
+.xp-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #3366cc;
+}
+
+.xp-label {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Tableau d'historique XP */
+.xp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.xp-table th {
+  background-color: #3366cc;
+  color: white;
+  text-align: left;
+  padding: 10px;
+}
+
+.xp-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.xp-table tr:nth-child(even) {
+  background-color: #f2f7ff;
+}
+
+.xp-table tr:hover {
+  background-color: #e5efff;
+}
+
+.xp-amount {
+  font-weight: bold;
+  color: #3366cc;
+  text-align: right;
+}
