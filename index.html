@@ -4,24 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil Zone01</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="./xp/xpStyle.css" />
-  <link rel="stylesheet" href="./skills/skillStyle.css" />
-
-  <!-- Font Awesome pour les icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- Autres CSS à ajouter plus tard -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Styles supplémentaires */
+    .empty-graph {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      color: #999;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* Ajustement pour le troisième graphique */
+    .graphs-container {
+      flex-wrap: wrap;
+    }
+
+    .graph-item {
+      flex: 1 1 300px;
+      min-width: 300px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
 <!-- Section de connexion -->
 <div id="login-section" class="container">
   <h2>Connexion Zone01</h2>
   <form id="loginForm">
-    <input
-            type="text"
-            id="username"
-            placeholder="Nom d'utilisateur ou email"
-    />
+    <input type="text" id="username" placeholder="Nom d'utilisateur ou email" />
     <input type="password" id="password" placeholder="Mot de passe" />
     <button type="submit">Se connecter</button>
   </form>
@@ -31,49 +45,59 @@
 </div>
 
 <!-- Section du profil (cachée par défaut) -->
-<div id="profile-section" class="container" style="display: none">
+<div id="profile-section" class="container">
   <div class="profile-header">
-    <h1 id="profile-name">Profil Zone01</h1>
-    <button id="logoutButton">
-      <i class="fas fa-sign-out-alt"></i> Se déconnecter
-    </button>
+    <h1 id="user-info">Profil Zone01</h1>
+    <button id="logoutButton"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
   </div>
 
-  <!-- Section XP -->
-  <div class="section" id="xp-section">
-    <h2><i class="fas fa-chart-line"></i> Expérience (XP)</h2>
-    <div id="xp-total">Chargement...</div>
-    <div id="xp-history"></div>
-    <!-- Le graphique XP sera ajouté ici dynamiquement -->
-  </div>
+  <!-- Layout en grille -->
+  <div class="grid-container">
+    <!-- Section XP -->
+    <div class="section" id="xp-section">
+      <h2><i class="fas fa-chart-line"></i> Expérience (XP)</h2>
+      <div class="section-content" id="xp-content">Chargement...</div>
+    </div>
 
-  <!-- Futures sections à ajouter -->
-  <div class="section" id="grades-section">
-    <h2><i class="fas fa-graduation-cap"></i> Notes</h2>
-    <div id="grades-content">Sera implémenté prochainement...</div>
-  </div>
+    <!-- Section Progress -->
+    <div class="section" id="progress-section">
+      <h2><i class="fas fa-tasks"></i> Progression</h2>
+      <div class="section-content" id="progress-content">Chargement...</div>
+    </div>
 
-  <div class="section" id="skills-section">
-    <h2><i class="fas fa-code"></i> Compétences</h2>
-    <div id="skills-content">Sera implémenté prochainement...</div>
-  </div>
+    <!-- Section Audits -->
+    <div class="section" id="audits-section">
+      <h2><i class="fas fa-exchange-alt"></i> Audits</h2>
+      <div class="section-content" id="audits-content">Chargement...</div>
+    </div>
 
-  <!-- Section Graphiques -->
-  <div class="section" id="graphs-section">
-    <h2><i class="fas fa-chart-pie"></i> Statistiques</h2>
-    <div id="graph-container">
-      <!-- Les graphiques SVG seront insérés ici -->
+    <!-- Section Stats (pleine largeur) -->
+    <div class="section" id="stats-section">
+      <h2><i class="fas fa-chart-pie"></i> Statistiques</h2>
+      <div class="section-content">
+        <div class="graphs-container">
+          <div class="graph-item">
+            <h3>XP par mois</h3>
+            <div id="xp-month-graph"></div>
+          </div>
+          <div class="graph-item">
+            <h3>Projets réussis/échoués</h3>
+            <div id="projects-ratio-graph"></div>
+          </div>
+          <div class="graph-item">
+            <h3>Ratio d'audit</h3>
+            <div id="audit-ratio-graph"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Scripts -->
-<script src="log.js"></script>
-<script src="graphql.js"></script>
-<script src="/xp/xpServices.js"></script>
-<script src="/xp/xpDisplay.js"></script>
-<script src="/skills/skillServices.js"></script>
-<script src="/skills/skillDisplay.js"></script>
-<!-- Autres scripts à ajouter plus tard -->
+<script type="text/javascript" src="auth.js"></script>
+<script type="text/javascript" src="api.js"></script>
+<script type="text/javascript" src="profile.js"></script>
+<script type="text/javascript" src="graphs.js"></script>
 </body>
 </html>
