@@ -102,7 +102,7 @@ function generateXPByMonthGraph(xpData) {
     let linePath = '';
     let previousY = null;
 
-    months.forEach((month, index) => {
+    months.forEach((month) => {
         const xpAmount = xpByMonth[month];
         const barHeight = (xpAmount / maxXP) * innerHeight;
         const barX = xPos + barWidth * 0.1; // Ajouter un peu d'espace entre les barres
@@ -243,7 +243,8 @@ function generateProjectsRatioGraph(projectsData) {
     const failedPath = getArcPath(centerX, centerY, radius, successAngle, 360);
 
     // Générer le SVG
-    const svg = `
+    // Ajouter le SVG au conteneur
+    container.innerHTML = `
     <svg width="100%" height="300" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
       <!-- Camembert -->
       <g transform="translate(${centerX}, ${centerY})">
@@ -307,9 +308,6 @@ function generateProjectsRatioGraph(projectsData) {
       </g>
     </svg>
   `;
-
-    // Ajouter le SVG au conteneur
-    container.innerHTML = svg;
 }
 
 // ===============================================
