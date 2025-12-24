@@ -99,17 +99,6 @@ function displayXPData(user) {
 
 // Fonction pour générer le cercle de niveau SVG
 function generateLevelCircle(level, totalXP) {
-    // Couleurs pour le dégradé en fonction du niveau
-    const getGradientColors = (level) => {
-        if (level < 5) return { start: "#3498db", end: "#2980b9" }; // Bleu
-        if (level < 10) return { start: "#2ecc71", end: "#27ae60" }; // Vert
-        if (level < 15) return { start: "#f1c40f", end: "#f39c12" }; // Jaune/Orange
-        if (level < 20) return { start: "#e74c3c", end: "#c0392b" }; // Rouge
-        return { start: "#9b59b6", end: "#8e44ad" }; // Violet pour niveaux élevés
-    };
-
-    const colors = getGradientColors(level);
-
     // Taille et paramètres du SVG
     const size = 200;
     const radius = 80;
@@ -118,7 +107,7 @@ function generateLevelCircle(level, totalXP) {
     const centerY = size / 2;
 
     // Calculer le progrès vers le prochain niveau (simulation)
-    const progressToNextLevel = Math.min(0.75, (totalXP % 10000) / 10000); // Exemple: 10000 XP par niveau
+    const progressToNextLevel = Math.min(0.75, (totalXP % 10000) / 10000);
     const circumference = 2 * Math.PI * radius;
     const dashArray = circumference * progressToNextLevel;
 
@@ -126,59 +115,74 @@ function generateLevelCircle(level, totalXP) {
     <svg width="100%" height="100%" viewBox="0 0 ${size} ${size}">
         <defs>
             <linearGradient id="levelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="${colors.start}" />
-                <stop offset="100%" stop-color="${colors.end}" />
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#c0c0c0" stop-opacity="0.7" />
             </linearGradient>
+            <filter id="levelGlow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
         </defs>
-        
+
         <!-- Cercle de fond -->
-        <circle 
-            cx="${centerX}" 
-            cy="${centerY}" 
-            r="${radius}" 
-            fill="none" 
-            stroke="#e6e6e6" 
+        <circle
+            cx="${centerX}"
+            cy="${centerY}"
+            r="${radius}"
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.08)"
             stroke-width="${strokeWidth}"
         />
-        
+
         <!-- Cercle de progression -->
-        <circle 
-            cx="${centerX}" 
-            cy="${centerY}" 
-            r="${radius}" 
-            fill="none" 
-            stroke="url(#levelGradient)" 
+        <circle
+            cx="${centerX}"
+            cy="${centerY}"
+            r="${radius}"
+            fill="none"
+            stroke="url(#levelGradient)"
             stroke-width="${strokeWidth}"
             stroke-dasharray="${dashArray} ${circumference}"
             stroke-dashoffset="0"
             transform="rotate(-90 ${centerX} ${centerY})"
+            filter="url(#levelGlow)"
+            stroke-linecap="round"
         />
-        
+
         <!-- Niveau central -->
-        <text 
-            x="${centerX}" 
-            y="${centerY - 10}" 
-            text-anchor="middle" 
-            font-size="40" 
-            font-weight="bold" 
-            fill="#2c3e50"
+        <text
+            x="${centerX}"
+            y="${centerY - 8}"
+            text-anchor="middle"
+            font-size="54"
+            font-weight="700"
+            font-family="Playfair Display, serif"
+            fill="#ffffff"
         >${level}</text>
-        <text 
-            x="${centerX}" 
-            y="${centerY + 20}" 
-            text-anchor="middle" 
-            font-size="16" 
-            fill="#7f8c8d"
+        <text
+            x="${centerX}"
+            y="${centerY + 18}"
+            text-anchor="middle"
+            font-size="12"
+            font-family="Inter, sans-serif"
+            font-weight="600"
+            fill="#808080"
+            letter-spacing="2"
         >NIVEAU</text>
-        
+
         <!-- Texte XP -->
-        <text 
-            x="${centerX}" 
-            y="${centerY + 60}" 
-            text-anchor="middle" 
-            font-size="14" 
-            fill="#95a5a6"
-        >${Math.round(progressToNextLevel * 100)}% du lvl ${level + 1}</text>
+        <text
+            x="${centerX}"
+            y="${centerY + 50}"
+            text-anchor="middle"
+            font-size="10"
+            font-family="Inter, sans-serif"
+            font-weight="500"
+            fill="#808080"
+        >${Math.round(progressToNextLevel * 100)}% vers niveau ${level + 1}</text>
     </svg>
     `;
 }

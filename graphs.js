@@ -58,15 +58,22 @@ function generateXPByMonthGraph(xpData) {
     <svg width="100%" height="300" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#3498db" stop-opacity="0.8"/>
-          <stop offset="100%" stop-color="#2980b9" stop-opacity="0.6"/>
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#808080" stop-opacity="0.4"/>
         </linearGradient>
         <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#2ecc71" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#27ae60" stop-opacity="1"/>
+          <stop offset="0%" stop-color="#c0c0c0" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0.7"/>
         </linearGradient>
+        <filter id="subtleGlow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      
+
       <!-- Groupe principal avec transformation pour les marges -->
       <g transform="translate(${margin.left}, ${margin.top})">
   `;
@@ -74,7 +81,7 @@ function generateXPByMonthGraph(xpData) {
     // Ajouter l'axe Y (vertical)
     svg += `
     <!-- Axe Y -->
-    <line x1="0" y1="0" x2="0" y2="${innerHeight}" stroke="#ccc" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="${innerHeight}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1"/>
   `;
 
     // Ajouter des graduations sur l'axe Y
@@ -85,16 +92,16 @@ function generateXPByMonthGraph(xpData) {
 
         svg += `
       <!-- Graduation Y -->
-      <line x1="-5" y1="${y}" x2="0" y2="${y}" stroke="#ccc" stroke-width="1"/>
-      <text x="-10" y="${y + 5}" text-anchor="end" font-size="12">${value}</text>
-      <line x1="0" y1="${y}" x2="${innerWidth}" y2="${y}" stroke="#eee" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <line x1="-5" y1="${y}" x2="0" y2="${y}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1"/>
+      <text x="-10" y="${y + 5}" text-anchor="end" font-size="10" fill="#808080" font-family="Inter, sans-serif" font-weight="500">${value}</text>
+      <line x1="0" y1="${y}" x2="${innerWidth}" y2="${y}" stroke="rgba(255, 255, 255, 0.05)" stroke-width="0.5" stroke-dasharray="4,4"/>
     `;
     }
 
     // Ajouter l'axe X (horizontal)
     svg += `
     <!-- Axe X -->
-    <line x1="0" y1="${innerHeight}" x2="${innerWidth}" y2="${innerHeight}" stroke="#ccc" stroke-width="1"/>
+    <line x1="0" y1="${innerHeight}" x2="${innerWidth}" y2="${innerHeight}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1"/>
   `;
 
     // Ajouter les barres et les graduations sur l'axe X
@@ -112,14 +119,15 @@ function generateXPByMonthGraph(xpData) {
         // Ajouter la barre
         svg += `
       <!-- Barre pour ${month} -->
-      <rect 
-        x="${barX}" 
-        y="${barY}" 
-        width="${barW}" 
-        height="${barHeight}" 
-        fill="url(#barGradient)" 
-        rx="3" 
+      <rect
+        x="${barX}"
+        y="${barY}"
+        width="${barW}"
+        height="${barHeight}"
+        fill="url(#barGradient)"
+        rx="3"
         ry="3"
+        filter="url(#subtleGlow)"
         data-month="${month}"
         data-xp="${xpAmount}"
       />
@@ -127,11 +135,14 @@ function generateXPByMonthGraph(xpData) {
 
         // Ajouter l'étiquette du mois
         svg += `
-      <text 
-        x="${barX + barW/2}" 
-        y="${innerHeight + 20}" 
-        text-anchor="middle" 
-        font-size="12"
+      <text
+        x="${barX + barW/2}"
+        y="${innerHeight + 20}"
+        text-anchor="middle"
+        font-size="10"
+        fill="#808080"
+        font-family="Inter, sans-serif"
+        font-weight="500"
       >${month}</text>
     `;
 
@@ -148,13 +159,14 @@ function generateXPByMonthGraph(xpData) {
 
         // Ajouter un cercle au point
         svg += `
-      <circle 
-        cx="${lineX}" 
-        cy="${lineY}" 
-        r="4" 
-        fill="#27ae60" 
-        stroke="white" 
-        stroke-width="1" 
+      <circle
+        cx="${lineX}"
+        cy="${lineY}"
+        r="4"
+        fill="#ffffff"
+        stroke="rgba(0, 0, 0, 0.3)"
+        stroke-width="1.5"
+        filter="url(#subtleGlow)"
       />
     `;
 
@@ -164,13 +176,15 @@ function generateXPByMonthGraph(xpData) {
     // Ajouter la ligne de tendance
     svg += `
     <!-- Ligne de tendance -->
-    <path 
-      d="${linePath}" 
-      fill="none" 
-      stroke="url(#lineGradient)" 
-      stroke-width="3" 
-      stroke-linejoin="round" 
+    <path
+      d="${linePath}"
+      fill="none"
+      stroke="url(#lineGradient)"
+      stroke-width="2"
+      stroke-linejoin="round"
       stroke-linecap="round"
+      filter="url(#subtleGlow)"
+      opacity="0.8"
     />
   `;
 
@@ -246,65 +260,90 @@ function generateProjectsRatioGraph(projectsData) {
     // Ajouter le SVG au conteneur
     container.innerHTML = `
     <svg width="100%" height="300" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="subtleGlowWhite">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="subtleGlowGray">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
       <!-- Camembert -->
       <g transform="translate(${centerX}, ${centerY})">
         <!-- Secteur des projets réussis -->
-        <path 
-          d="${successPath}" 
-          fill="#27ae60" 
-          stroke="white" 
+        <path
+          d="${successPath}"
+          fill="#ffffff"
+          stroke="rgba(255, 255, 255, 0.3)"
           stroke-width="2"
           transform="translate(-${radius}, -${radius})"
+          filter="url(#subtleGlowWhite)"
+          opacity="0.9"
         >
           <title>Projets réussis: ${successProjects} (${successPercent}%)</title>
         </path>
-        
+
         <!-- Secteur des projets échoués -->
-        <path 
-          d="${failedPath}" 
-          fill="#e74c3c" 
-          stroke="white" 
+        <path
+          d="${failedPath}"
+          fill="#808080"
+          stroke="rgba(128, 128, 128, 0.3)"
           stroke-width="2"
           transform="translate(-${radius}, -${radius})"
+          filter="url(#subtleGlowGray)"
+          opacity="0.5"
         >
           <title>Projets échoués: ${failedProjects} (${failedPercent}%)</title>
         </path>
-        
+
         <!-- Cercle intérieur pour effet donut -->
-        <circle 
-          cx="0" 
-          cy="0" 
-          r="${radius * 0.6}" 
-          fill="white"
+        <circle
+          cx="0"
+          cy="0"
+          r="${radius * 0.6}"
+          fill="rgba(26, 26, 26, 0.95)"
         />
-        
+
         <!-- Texte au centre -->
-        <text 
-          x="0" 
-          y="-10" 
-          text-anchor="middle" 
-          font-size="24" 
-          font-weight="bold" 
-          fill="#2c3e50"
+        <text
+          x="0"
+          y="-8"
+          text-anchor="middle"
+          font-size="36"
+          font-weight="700"
+          font-family="Playfair Display, serif"
+          fill="#ffffff"
         >${successPercent}%</text>
-        <text 
-          x="0" 
-          y="20" 
-          text-anchor="middle" 
-          font-size="14" 
-          fill="#7f8c8d"
-        >Taux de réussite</text>
+        <text
+          x="0"
+          y="16"
+          text-anchor="middle"
+          font-size="11"
+          font-family="Inter, sans-serif"
+          font-weight="500"
+          fill="#808080"
+          letter-spacing="1.5"
+        >TAUX DE RÉUSSITE</text>
       </g>
-      
+
       <!-- Légende -->
-      <g transform="translate(${width * 0.7}, ${height * 0.75})">
+      <g transform="translate(${width * 0.65}, ${height * 0.75})">
         <!-- Réussis -->
-        <rect x="0" y="0" width="20" height="20" fill="#27ae60" rx="3" ry="3" />
-        <text x="30" y="15" font-size="14">Réussis (${successProjects})</text>
-        
+        <rect x="0" y="0" width="14" height="14" fill="#ffffff" rx="2" ry="2" opacity="0.9" />
+        <text x="20" y="11" font-size="11" fill="#e8e8e8" font-family="Inter, sans-serif" font-weight="500">Réussis (${successProjects})</text>
+
         <!-- Échoués -->
-        <rect x="0" y="30" width="20" height="20" fill="#e74c3c" rx="3" ry="3" />
-        <text x="30" y="45" font-size="14">Échoués (${failedProjects})</text>
+        <rect x="0" y="22" width="14" height="14" fill="#808080" rx="2" ry="2" opacity="0.5" />
+        <text x="20" y="33" font-size="11" fill="#e8e8e8" font-family="Inter, sans-serif" font-weight="500">Échoués (${failedProjects})</text>
       </g>
     </svg>
   `;
@@ -352,66 +391,91 @@ function generateAuditRatioGraph(user) {
 
     // Générer le SVG
     const svg = `
-    <svg width="100%" height="300" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"> 
+    <svg width="100%" height="300" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="subtleGlowLight">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="subtleGlowDark">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
       <!-- Camembert -->
       <g transform="translate(${centerX}, ${centerY})">
         <!-- Secteur des points donnés -->
-        <path 
-          d="${upPath}" 
-          fill="#3498db" 
-          stroke="white" 
+        <path
+          d="${upPath}"
+          fill="#c0c0c0"
+          stroke="rgba(192, 192, 192, 0.3)"
           stroke-width="2"
           transform="translate(-${radius}, -${radius})"
+          filter="url(#subtleGlowLight)"
+          opacity="0.8"
         >
           <title>Points donnés: ${totalUp} (${upPercent}%)</title>
         </path>
-        
+
         <!-- Secteur des points reçus -->
-        <path 
-          d="${downPath}" 
-          fill="#9b59b6" 
-          stroke="white" 
+        <path
+          d="${downPath}"
+          fill="#505050"
+          stroke="rgba(80, 80, 80, 0.3)"
           stroke-width="2"
           transform="translate(-${radius}, -${radius})"
+          filter="url(#subtleGlowDark)"
+          opacity="0.6"
         >
           <title>Points reçus: ${totalDown} (${downPercent}%)</title>
         </path>
-        
+
         <!-- Cercle intérieur pour effet donut -->
-        <circle 
-          cx="0" 
-          cy="0" 
-          r="${radius * 0.6}" 
-          fill="white"
+        <circle
+          cx="0"
+          cy="0"
+          r="${radius * 0.6}"
+          fill="rgba(26, 26, 26, 0.95)"
         />
-        
+
         <!-- Texte au centre -->
-        <text 
-          x="0" 
-          y="-10" 
-          text-anchor="middle" 
-          font-size="24" 
-          font-weight="bold" 
-          fill="#2c3e50"
+        <text
+          x="0"
+          y="-8"
+          text-anchor="middle"
+          font-size="36"
+          font-weight="700"
+          font-family="Playfair Display, serif"
+          fill="#ffffff"
         >${auditRatio.toFixed(1)}</text>
-        <text 
-          x="0" 
-          y="20" 
-          text-anchor="middle" 
-          font-size="14" 
-          fill="#7f8c8d"
-        >Ratio d'audit</text>
+        <text
+          x="0"
+          y="16"
+          text-anchor="middle"
+          font-size="11"
+          font-family="Inter, sans-serif"
+          font-weight="500"
+          fill="#808080"
+          letter-spacing="1.5"
+        >RATIO D'AUDIT</text>
       </g>
-      
+
       <!-- Légende -->
       <g transform="translate(${width * 0.5}, ${height * 0.8})">
         <!-- Points donnés -->
-        <rect x="-120" y="0" width="20" height="20" fill="#3498db" rx="3" ry="3" />
-        <text x="-90" y="15" font-size="14">Donnés (${totalUp})</text>
-        
+        <rect x="-100" y="0" width="14" height="14" fill="#c0c0c0" rx="2" ry="2" opacity="0.8" />
+        <text x="-80" y="11" font-size="11" fill="#e8e8e8" font-family="Inter, sans-serif" font-weight="500">Donnés (${totalUp})</text>
+
         <!-- Points reçus -->
-        <rect x="20" y="0" width="20" height="20" fill="#9b59b6" rx="3" ry="3" />
-        <text x="50" y="15" font-size="14">Reçus (${totalDown})</text>
+        <rect x="20" y="0" width="14" height="14" fill="#505050" rx="2" ry="2" opacity="0.6" />
+        <text x="40" y="11" font-size="11" fill="#e8e8e8" font-family="Inter, sans-serif" font-weight="500">Reçus (${totalDown})</text>
       </g>
     </svg>
   `;
